@@ -1,0 +1,10 @@
+{
+  "module_name": "Pomodoro Timer",
+  "maintainer": "jtrelfa",
+  "features": {
+    "rgb_matrix": true
+  },
+  "keycodes": [
+    { "key": "COMMUNITY_MODULE_POMODORO_TIMER", "aliases": ["CM_POM"] }
+  ]
+}
