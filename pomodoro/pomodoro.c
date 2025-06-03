@@ -159,10 +159,10 @@ bool process_record_pomodoro(uint16_t keycode, keyrecord_t *record) {
 };
 
 bool rgb_matrix_indicators_pomodoro(void) {
-#ifdef CONSOLE_ENABLE
-  print("rbg_matrix_indicators_pomodoro()\n");
-#endif
   if (!pom_timer_running) {
+#ifdef CONSOLE_ENABLE
+    print("rbg_matrix_indicators_pomodoro(): timer not running\n");
+#endif
     return false;
   }
   uint32_t current_time = timer_read32();
