@@ -50,7 +50,7 @@ static bool original_values_saved = false;
 static bool timer_running = false;
 static uint32_t timer_start = 0;
 static uint32_t last_flash_time = 0;
-static enum led_state current_led_state = LED_STATE_OFF;
+static enum led_state current_led_state = POM_LED_STATE_OFF;
 static bool led_on = false;
 static bool rgb_matrix_was_enabled = false;
 
