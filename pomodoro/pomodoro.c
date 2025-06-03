@@ -57,7 +57,7 @@ static bool pom_rgb_matrix_was_enabled = false;
 
 // Save the original RGB matrix state
 void pom_save_rgb_matrix_state(void) {
-  if (!pom_pom_original_values_saved) {
+  if (!pom_original_values_saved) {
     pom_rgb_matrix_was_enabled = rgb_matrix_is_enabled();
 
     if (pom_rgb_matrix_was_enabled) {
@@ -69,13 +69,13 @@ void pom_save_rgb_matrix_state(void) {
       pom_original_val = rgb_matrix_get_val();
     }
 
-    pom_pom_original_values_saved = true;
+    pom_original_values_saved = true;
   }
 };
 
 // Restore the original RGB matrix state
 void pom_restore_rgb_matrix_state(void) {
-  if (pom_pom_original_values_saved) {
+  if (pom_original_values_saved) {
     if (pom_rgb_matrix_was_enabled) {
       rgb_matrix_mode(pom_original_mode);
       rgb_matrix_set_speed(pom_original_speed);
@@ -85,7 +85,7 @@ void pom_restore_rgb_matrix_state(void) {
       rgb_matrix_disable();
     }
 
-    pom_pom_original_values_saved = false;
+    pom_original_values_saved = false;
   }
 };
 
