@@ -42,19 +42,19 @@ There are a number of configurable options. The following values below correspon
 //***ALL TIMES SHOULD BE MULTIPLES OF 1000***
 
 //How quickly the key flashes on and off (1 second intervals)
-#define POM_FLASH_INTERVAL 1000
+#define POM_FLASH_INTERVAL_MS 1000
 
 //How long to "prepare to work" (10 seconds)
-#define POM_PREPARE_FLASH_DURATION 10000
+#define POM_PREPARE_FLASH_DURATION_MS 10000
 
 //Total work time (24 mins, 50 seconds)
-#define POM_WORKING_DURATION 1490000
+#define POM_WORKING_DURATION_MS 1490000
 
 //How long to "prepare to rest" (10 seconds)
-#define POM_DONE_WORKING_FLASH_DURATION 10000
+#define POM_DONE_WORKING_FLASH_DURATION_MS 10000
 
 //Total rest time (4 minutes, 50 seconds)
-#define POM_RESTING_DURATION 290000
+#define POM_RESTING_DURATION_MS 290000
 
 //These are named colors from color.h
 //https://docs.qmk.fm/features/rgb_matrix#colors
