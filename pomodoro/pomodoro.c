@@ -1,6 +1,7 @@
+#include QMK_KEYBOARD_H
 #include "pomodoro.h"
 
-ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1, 0, 0);
+ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1, 1, 0);
 
 // Default values if not configured
 // timers are in milliseconds
