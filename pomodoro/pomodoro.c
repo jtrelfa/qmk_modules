@@ -130,9 +130,9 @@ bool pom_toggle_led_timer(void) {
 };
 
 bool process_record_pomodoro(uint16_t keycode, keyrecord_t *record) {
-  if (!process_record_pomodoro_kb(keycode, record)) {
-    return false;
-  }
+  // if (!process_record_pomodoro_kb(keycode, record)) {
+  //   return false;
+  // }
   switch (keycode) {
   case COMMUNITY_MODULE_POMODORO_TIMER:
     if (record->event.pressed) {
@@ -144,9 +144,9 @@ bool process_record_pomodoro(uint16_t keycode, keyrecord_t *record) {
 };
 
 bool rgb_matrix_indicators_pomodoro(void) {
-  if (!rgb_matrix_indicators_kb()) {
-    return false;
-  }
+  // if (!rgb_matrix_indicators_kb()) {
+  //   return false;
+  // }
   if (!timer_running) {
     return false;
   }
