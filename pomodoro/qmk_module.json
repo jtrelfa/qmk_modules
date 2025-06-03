@@ -1,6 +1,7 @@
 {
   "module_name": "Pomodoro Timer",
   "maintainer": "jtrelfa",
+  "license": "GPL-3.0-or-later",
   "features": {
     "rgb_matrix": true
   },
