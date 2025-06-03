@@ -132,7 +132,8 @@ bool pom_toggle_led_timer(void) {
 
 bool process_keycode_pomodoro_toggle(keyrecord_t *record) {
   if (record->event.pressed) {
-    return pom_toggle_led_timer();
+    pom_toggle_led_timer();
+    return true;
   }
   return false;
 }
@@ -143,9 +144,7 @@ bool process_record_pomodoro(uint16_t keycode, keyrecord_t *record) {
   // }
   switch (keycode) {
   case COMMUNITY_MODULE_POMODORO_TIMER:
-    if (record->event.pressed) {
-      return process_keycode_pomodoro_toggle(record);
-    }
+    return process_keycode_pomodoro_toggle(record);
     break;
   }
   return true;
