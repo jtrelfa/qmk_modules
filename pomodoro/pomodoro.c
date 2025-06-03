@@ -40,57 +40,57 @@ ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1, 1, 0);
 #endif
 
 // Store original RGB matrix mode and settings
-static uint8_t original_mode = 0;
-static uint8_t original_speed = 0;
-static uint8_t original_hue = 0;
-static uint8_t original_sat = 0;
-static uint8_t original_val = 0;
-static bool original_values_saved = false;
+static uint8_t pom_original_mode = 0;
+static uint8_t pom_original_speed = 0;
+static uint8_t pom_original_hue = 0;
+static uint8_t pom_original_sat = 0;
+static uint8_t pom_original_val = 0;
+static bool pom_original_values_saved = false;
 
 // Status variables
-static bool timer_running = false;
-static uint32_t timer_start = 0;
-static uint32_t last_flash_time = 0;
-static enum led_state current_led_state = POM_LED_STATE_OFF;
-static bool led_on = false;
-static bool rgb_matrix_was_enabled = false;
+static bool pom_timer_running = false;
+static uint32_t pom_timer_start = 0;
+static uint32_t pom_last_flash_time = 0;
+static enum pom_led_state pom_current_led_state = POM_LED_STATE_OFF;
+static bool pom_led_on = false;
+static bool pom_rgb_matrix_was_enabled = false;
 
 // Save the original RGB matrix state
 void pom_save_rgb_matrix_state(void) {
-  if (!original_values_saved) {
-    rgb_matrix_was_enabled = rgb_matrix_is_enabled();
+  if (!pom_pom_original_values_saved) {
+    pom_rgb_matrix_was_enabled = rgb_matrix_is_enabled();
 
-    if (rgb_matrix_was_enabled) {
+    if (pom_rgb_matrix_was_enabled) {
       // Save the current RGB matrix mode and settings
-      original_mode = rgb_matrix_get_mode();
-      original_speed = rgb_matrix_get_speed();
-      original_hue = rgb_matrix_get_hue();
-      original_sat = rgb_matrix_get_sat();
-      original_val = rgb_matrix_get_val();
+      pom_original_mode = rgb_matrix_get_mode();
+      pom_original_speed = rgb_matrix_get_speed();
+      pom_original_hue = rgb_matrix_get_hue();
+      pom_original_sat = rgb_matrix_get_sat();
+      pom_original_val = rgb_matrix_get_val();
     }
 
-    original_values_saved = true;
+    pom_pom_original_values_saved = true;
   }
 };
 
 // Restore the original RGB matrix state
 void pom_restore_rgb_matrix_state(void) {
-  if (original_values_saved) {
-    if (rgb_matrix_was_enabled) {
-      rgb_matrix_mode(original_mode);
-      rgb_matrix_set_speed(original_speed);
-      rgb_matrix_sethsv(original_hue, original_sat, original_val);
+  if (pom_pom_original_values_saved) {
+    if (pom_rgb_matrix_was_enabled) {
+      rgb_matrix_mode(pom_original_mode);
+      rgb_matrix_set_speed(pom_original_speed);
+      rgb_matrix_sethsv(pom_original_hue, pom_original_sat, pom_original_val);
       rgb_matrix_enable();
     } else {
       rgb_matrix_disable();
     }
 
-    original_values_saved = false;
+    pom_pom_original_values_saved = false;
   }
 };
 
 // Get current state based on elapsed time
-enum led_state pom_get_current_state(uint32_t elapsed_time) {
+enum pom_led_state pom_get_current_state(uint32_t elapsed_time) {
   uint32_t cycle_position = elapsed_time % POM_TOTAL_CYCLE_DURATION;
 
   if (cycle_position < POM_PREPARE_FLASH_DURATION) {
@@ -108,10 +108,10 @@ enum led_state pom_get_current_state(uint32_t elapsed_time) {
 };
 
 bool pom_toggle_led_timer(void) {
-  if (timer_running) {
+  if (pom_timer_running) {
     // Stop timer and restore original color
-    timer_running = false;
-    current_led_state = POM_LED_STATE_OFF;
+    pom_timer_running = false;
+    pom_current_led_state = POM_LED_STATE_OFF;
     pom_restore_rgb_matrix_state();
     return false;
   } else {
@@ -121,11 +121,11 @@ bool pom_toggle_led_timer(void) {
     // gotta make sure it is enabled
     rgb_matrix_enable();
 
-    timer_running = true;
-    timer_start = timer_read32();
-    last_flash_time = timer_start;
-    current_led_state = POM_LED_STATE_PREPARE_FLASHING;
-    led_on = true;
+    pom_timer_running = true;
+    pom_timer_start = timer_read32();
+    pom_last_flash_time = pom_timer_start;
+    pom_current_led_state = POM_LED_STATE_PREPARE_FLASHING;
+    pom_led_on = true;
     return true;
   }
 };
@@ -155,34 +155,34 @@ bool rgb_matrix_indicators_pomodoro(void) {
   // if (!rgb_matrix_indicators_kb()) {
   //   return false;
   // }
-  if (!timer_running) {
+  if (!pom_timer_running) {
     return false;
   }
   uint32_t current_time = timer_read32();
-  uint32_t elapsed_time = current_time - timer_start;
+  uint32_t elapsed_time = current_time - pom_timer_start;
 
   // Determine current state
-  enum led_state new_state = pom_get_current_state(elapsed_time);
+  enum pom_led_state new_state = pom_get_current_state(elapsed_time);
 
   // Handle state transitions
-  if (new_state != current_led_state) {
-    current_led_state = new_state;
-    led_on = true; // Reset flash state on transitions
+  if (new_state != pom_current_led_state) {
+    pom_current_led_state = new_state;
+    pom_led_on = true; // Reset flash state on transitions
   }
 
   // Handle flashing for flashing states
-  if (current_led_state == POM_LED_STATE_PREPARE_FLASHING ||
-      current_led_state == POM_LED_STATE_DONE_WORKING_FLASHING) {
-    if (current_time - last_flash_time >= POM_FLASH_INTERVAL) {
-      led_on = !led_on;
-      last_flash_time = current_time;
+  if (pom_current_led_state == POM_LED_STATE_PREPARE_FLASHING ||
+      pom_current_led_state == POM_LED_STATE_DONE_WORKING_FLASHING) {
+    if (current_time - pom_last_flash_time >= POM_FLASH_INTERVAL) {
+      pom_led_on = !pom_led_on;
+      pom_last_flash_time = current_time;
     }
   }
 
   // Set the color based on current state
-  switch (current_led_state) {
+  switch (pom_current_led_state) {
   case POM_LED_STATE_PREPARE_FLASHING:
-    if (led_on) {
+    if (pom_led_on) {
       rgb_matrix_set_color(POM_KEY_INDEX, POM_PREPARE_COLOR);
     } else {
       rgb_matrix_set_color(POM_KEY_INDEX, RGB_OFF);
@@ -194,7 +194,7 @@ bool rgb_matrix_indicators_pomodoro(void) {
     break;
 
   case POM_LED_STATE_DONE_WORKING_FLASHING:
-    if (led_on) {
+    if (pom_led_on) {
       rgb_matrix_set_color(POM_KEY_INDEX, POM_DONE_WORKING_COLOR);
     } else {
       rgb_matrix_set_color(POM_KEY_INDEX, RGB_OFF);
