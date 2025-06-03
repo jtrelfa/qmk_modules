@@ -15,3 +15,4 @@ enum led_state pom_get_current_state(uint32_t elapsed_time);
 void pom_save_rgb_matrix_state(void);
 void pom_restore_rgb_matrix_state(void);
 bool pom_toggle_led_timer(void);
+bool process_record_pomodoro(uint16_t keycode, keyrecord_t *record);
