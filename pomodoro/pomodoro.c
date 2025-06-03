@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "pomodoro.h"
-
+#ifdef CONSOLE_ENABLE
+#include "print.h"
+#endif
 ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1, 1, 0);
 
 // Default values if not configured
@@ -108,6 +110,9 @@ enum pom_led_state pom_get_current_state(uint32_t elapsed_time) {
 };
 
 bool pom_toggle_led_timer(void) {
+#ifdef CONSOLE_ENABLE
+  print("Toggling the timer\n");
+#endif
   if (pom_timer_running) {
     // Stop timer and restore original color
     pom_timer_running = false;
@@ -144,6 +149,9 @@ bool process_record_pomodoro(uint16_t keycode, keyrecord_t *record) {
   // }
   switch (keycode) {
   case COMMUNITY_MODULE_POMODORO_TIMER:
+#ifdef CONSOLE_ENABLE
+    print("^^ COMMUNITY_MODULE_POMODORO_TIMER\n");
+#endif
     return process_keycode_pomodoro_toggle(record);
     break;
   }
@@ -151,9 +159,9 @@ bool process_record_pomodoro(uint16_t keycode, keyrecord_t *record) {
 };
 
 bool rgb_matrix_indicators_pomodoro(void) {
-  // if (!rgb_matrix_indicators_kb()) {
-  //   return false;
-  // }
+#ifdef CONSOLE_ENABLE
+  print("rbg_matrix_indicators_pomodoro()\n");
+#endif
   if (!pom_timer_running) {
     return false;
   }
