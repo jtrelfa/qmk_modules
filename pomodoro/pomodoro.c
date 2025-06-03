@@ -5,8 +5,8 @@
 #endif
 ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1, 1, 0);
 
-struct pom_settings {
-    uint8_t            pom_original_mode;
+struct {
+    uint8_t            original_mode;
     uint8_t            original_speed;
     uint8_t            original_hue;
     uint8_t            original_sat;
@@ -19,24 +19,7 @@ struct pom_settings {
     bool               led_on;
     bool               rgb_matrix_was_enabled;
     int                total_cycle_duration;
-};
-struct pom_settings pom;
-// Store original RGB matrix mode and settings
-pom.original_mode         = 0;
-pom.original_speed        = 0;
-pom.original_hue          = 0;
-pom.original_sat          = 0;
-pom.original_val          = 0;
-pom.original_values_saved = false;
-
-// Status variables
-pom.timer_running          = false;
-pom.timer_start            = 0;
-pom.last_flash_time        = 0;
-pom.current_led_state      = POM_LED_STATE_OFF;
-pom.led_on                 = false;
-pom.rgb_matrix_was_enabled = false;
-pom.total_cycle_duration   = POM_PREPARE_FLASH_DURATION_MS + POM_WORKING_DURATION_MS + POM_DONE_WORKING_FLASH_DURATION_MS + POM_RESTING_DURATION_MS;
+} pom = {0, .total_cycle_duration = POM_PREPARE_FLASH_DURATION_MS + POM_WORKING_DURATION_MS + POM_DONE_WORKING_FLASH_DURATION_MS + POM_RESTING_DURATION_MS};
 
 // Save the original RGB matrix state
 void pom_save_rgb_matrix_state(void) {
