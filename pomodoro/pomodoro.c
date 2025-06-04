@@ -18,8 +18,7 @@ struct {
     enum pom_led_state current_led_state;
     bool               led_on;
     bool               rgb_matrix_was_enabled;
-    int                total_cycle_duration;
-} pom = {0, .total_cycle_duration = POM_PREPARE_FLASH_DURATION_MS + POM_WORKING_DURATION_MS + POM_DONE_WORKING_FLASH_DURATION_MS + POM_RESTING_DURATION_MS};
+} pom = {0};
 
 // Save the original RGB matrix state
 void pom_save_rgb_matrix_state(void) {
@@ -57,7 +56,7 @@ void pom_restore_rgb_matrix_state(void) {
 
 // Get current state based on elapsed time
 enum pom_led_state pom_get_current_state(uint32_t elapsed_time) {
-    uint32_t cycle_position = elapsed_time % pom.total_cycle_duration;
+    uint32_t cycle_position = elapsed_time % POM_TOTAL_CYCLE_DURATION;
 
     if (cycle_position < POM_PREPARE_FLASH_DURATION_MS) {
         return POM_LED_STATE_PREPARE_FLASHING;

@@ -45,6 +45,8 @@ enum pom_led_state {
 #    define POM_KEY_INDEX 6
 #endif
 
+#define POM_TOTAL_CYCLE_DURATION (POM_PREPARE_FLASH_DURATION_MS + POM_WORKING_DURATION_MS + POM_DONE_WORKING_FLASH_DURATION_MS + POM_RESTING_DURATION_MS)
+
 enum pom_led_state pom_get_current_state(uint32_t elapsed_time);
 void pom_save_rgb_matrix_state(void);
 void pom_restore_rgb_matrix_state(void);
