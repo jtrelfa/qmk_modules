@@ -2,6 +2,7 @@
   "module_name": "Pomodoro Timer",
   "maintainer": "jtrelfa",
   "license": "GPL-3.0-or-later",
+  "url": "https://github.com/jtrelfa/qmk_modules",
   "features": {
     "rgb_matrix": true
   },

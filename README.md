@@ -8,6 +8,8 @@ I was encouraged by @SenseiZé ッ on the Binepad discord to share my contributi
 | ----------------------------- | ------------------------------------------------ |
 | [Pomodoro Timer](./pomodoro/) | A work timer based on the pomodoro timer concept |
 
+See the [changelog](./CHANGELOG.md) for what's changed, including anything you need to update in your keymap.
+
 ## What is this?
 
 This repo contains my community modules for [Quantum Mechanical Keyboard
@@ -31,7 +33,7 @@ modules, replacing `/path/to/qmk_firmware` with the path of your
 ```sh
 cd /path/to/qmk_firmware
 mkdir -p modules
-git submodule add https://github.com/jtrelfa/qmk-modules.git modules/jtrelfa
+git submodule add https://github.com/jtrelfa/qmk_modules.git modules/jtrelfa
 git submodule update --init --recursive
 ```
 
@@ -40,8 +42,8 @@ Userspace](https://docs.qmk.fm/newbs_external_userspace), replace the first
 line with `cd /path/to/your/external/userspace`.
 
 Or if you don't want to use git, [download a .zip of this
-repo](https://github.com/jtrelfa/qmk-modules/archive/refs/heads/main.zip) into
-the `modules` folder. Unzip it, then rename the resulting `qmk-modules-main`
+repo](https://github.com/jtrelfa/qmk_modules/archive/refs/heads/main.zip) into
+the `modules` folder. Unzip it, then rename the resulting `qmk_modules-main`
 folder to `jtrelfa`.
 
 In any case, the installed directory structure is like this:
